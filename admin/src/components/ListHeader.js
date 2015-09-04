@@ -15,11 +15,24 @@ import CurrentListStore from '../stores/CurrentListStore';
 var ListHeader = React.createClass({
 	displayName: 'ListHeader',
 	getInitialState () {
+/*
+// keystone official way, does not work with old babel:
 		return {
 			createIsOpen: Keystone.showCreateForm,
 			searchString: '',
 			...this.getStateFromStore()
 		};
+*/
+// works with old babel, which does not throw parse errors in all enviros
+		var obj = {
+			createIsOpen: Keystone.showCreateForm,
+			searchString: ''
+		},
+		state = this.getStateFromStore();
+		Object.keys(state).forEach(function(k) {
+			obj[k] = state[k];
+		});
+		return obj;
 	},
 	componentDidMount () {
 		CurrentListStore.addChangeListener(this.updateStateFromStore);
