@@ -17,10 +17,22 @@ const ListView = React.createClass({
 	displayName: 'ListView',
 
 	getInitialState () {
+/*
+// keystone official way, does not work with old babel:
 		return {
 			constrainTableWidth: true,
 			...this.getStateFromStore()
 		};
+*/
+// works with old babel, which does not throw parse errors in all enviros
+		var obj = {
+			constrainTableWidth: true
+		},
+		state = this.getStateFromStore();
+		Object.keys(state).forEach(function(k) {
+			obj[k] = state[k];
+		});
+		return obj;
 	},
 
 	componentDidMount () {
