@@ -93,10 +93,12 @@ var Keystone = function() {
 _.extend(Keystone.prototype, require('./lib/core/options')());
 
 
-Keystone.prototype.prefixModel = function (key) {
+Keystone.prototype.prefixModel = function (key, localDoNotOverride) {
 	var modelPrefix = this.get('model prefix');
+	
+	localDoNotOverride = localDoNotOverride || false;
 
-	if (modelPrefix) {
+	if (modelPrefix && !localDoNotOverride) {
 		key = modelPrefix + '_' + key;
 	}
 
